@@ -78,6 +78,34 @@ router.post("/", (req, res) => {
   }
 });
 
+// PATCH /api/tasks/:id - edit a task (title, category, priority, scheduled_date)
+router.patch("/:id", (req, res) => {
+  try {
+    const task = db.prepare(
+      "SELECT * FROM tasks WHERE id = ? AND user_id = ?"
+    ).get(req.params.id, req.user.id);
+
+    if (!task) return res.status(404).json({ error: "Task not found" });
+
+    const { title, category, priority, scheduled_date } = req.body;
+
+    const newTitle = title || task.title;
+    const newCategory = category || task.category;
+    const newPriority = priority || task.priority;
+    const newDate = scheduled_date || task.scheduled_date;
+
+    db.prepare(
+      "UPDATE tasks SET title = ?, category = ?, priority = ?, scheduled_date = ? WHERE id = ?"
+    ).run(newTitle, newCategory, newPriority, newDate, task.id);
+
+    const updatedTask = db.prepare("SELECT * FROM tasks WHERE id = ?").get(task.id);
+    res.json({ task: updatedTask });
+  } catch (err) {
+    console.error("Edit task error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // PATCH /api/tasks/:id/complete
 router.patch("/:id/complete", (req, res) => {
   try {
@@ -112,6 +140,39 @@ router.patch("/:id/complete", (req, res) => {
     res.json({ task: updatedTask });
   } catch (err) {
     console.error("Complete task error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// PATCH /api/tasks/:id/uncomplete - undo a completed task
+router.patch("/:id/uncomplete", (req, res) => {
+  try {
+    const task = db.prepare(
+      "SELECT * FROM tasks WHERE id = ? AND user_id = ?"
+    ).get(req.params.id, req.user.id);
+
+    if (!task) return res.status(404).json({ error: "Task not found" });
+    if (!task.is_completed) return res.status(400).json({ error: "Task is not completed" });
+
+    if (req.user.condition === "gamified" && task.xp_earned > 0) {
+      const newXP = Math.max(0, req.user.xp - task.xp_earned);
+      const newLevel = calculateLevel(newXP);
+
+      db.prepare("UPDATE users SET xp = ?, level = ? WHERE id = ?").run(newXP, newLevel, req.user.id);
+      db.prepare("UPDATE tasks SET is_completed = 0, completed_at = NULL, xp_earned = 0 WHERE id = ?").run(task.id);
+      db.prepare("INSERT INTO activity_log (user_id, action, task_id, xp_gained) VALUES (?, 'task_uncompleted', ?, ?)").run(req.user.id, task.id, -task.xp_earned);
+
+      const updatedTask = db.prepare("SELECT * FROM tasks WHERE id = ?").get(task.id);
+      return res.json({ task: updatedTask, xpRemoved: task.xp_earned, totalXP: newXP, level: newLevel });
+    }
+
+    db.prepare("UPDATE tasks SET is_completed = 0, completed_at = NULL WHERE id = ?").run(task.id);
+    db.prepare("INSERT INTO activity_log (user_id, action, task_id) VALUES (?, 'task_uncompleted', ?)").run(req.user.id, task.id);
+
+    const updatedTask = db.prepare("SELECT * FROM tasks WHERE id = ?").get(task.id);
+    res.json({ task: updatedTask });
+  } catch (err) {
+    console.error("Uncomplete task error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });

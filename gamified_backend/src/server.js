@@ -18,10 +18,12 @@ dbReady.then(() => {
   const authRoutes = require("./routes/auth");
   const taskRoutes = require("./routes/tasks");
   const progressRoutes = require("./routes/progress");
+  const evaluationRoutes = require("./routes/evaluation");
 
   app.use("/api/auth", authRoutes);
   app.use("/api/tasks", taskRoutes);
   app.use("/api/progress", progressRoutes);
+  app.use("/api/evaluation", evaluationRoutes);
 
   app.listen(PORT, () => {
     console.log(`Gamified To-Do backend running on http://localhost:${PORT}`);

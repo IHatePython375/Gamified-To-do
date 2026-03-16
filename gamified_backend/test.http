@@ -1,0 +1,79 @@
+### Register a new user
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "test1234"
+}
+
+### Login
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "test1234"
+}
+
+### Create a task (replace eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q after logging in)
+POST http://localhost:3001/api/tasks
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+{
+  "title": "Finish HCI proposal",
+  "category": "homework",
+  "priority": "high",
+  "scheduled_date": "2026-03-16"
+}
+
+### Get today's tasks
+GET http://localhost:3001/api/tasks/today
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Get all tasks
+GET http://localhost:3001/api/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Edit a task (replace 1 with task id)
+PATCH http://localhost:3001/api/tasks/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+{
+  "title": "Updated title",
+  "priority": "low"
+}
+
+### Complete a task (replace 1 with task id)
+PATCH http://localhost:3001/api/tasks/1/complete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Uncomplete a task (replace 1 with task id)
+PATCH http://localhost:3001/api/tasks/1/uncomplete
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Delete a task (replace 1 with task id)
+DELETE http://localhost:3001/api/tasks/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Get progress (gamified users only)
+GET http://localhost:3001/api/progress
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Get progress history
+GET http://localhost:3001/api/progress/history
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Evaluation: your summary
+GET http://localhost:3001/api/evaluation/summary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Evaluation: all users comparison
+GET http://localhost:3001/api/evaluation/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
+
+### Evaluation: raw activity log
+GET http://localhost:3001/api/evaluation/activity-log
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzczNjk4MzU4LCJleHAiOjE3NzQzMDMxNTh9.uBc2aWIteCQhLwu9dx7CgbDrLefY_fLmP25OwsQVF4Q
