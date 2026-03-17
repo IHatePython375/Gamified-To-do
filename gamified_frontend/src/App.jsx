@@ -5,6 +5,8 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import GetDate from './track_tasks.jsx'
 import ProgressBar from './components/progress_bar.jsx'
+import Dropdown from './components/dropdown.jsx'
+import DrawTopbar from './topbar.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,7 +16,10 @@ function App() {
     <div>
       <GetDate />
 
+      <DrawTopbar />
+
       <ProgressBar progress = {50} />
+
     </div>
       <section id="center">
         <div className="hero">

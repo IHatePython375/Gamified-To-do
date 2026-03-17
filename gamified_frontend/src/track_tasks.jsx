@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect} from 'react';
 
+// Gets the current date (used for Today and as a reference point for the week and month views)
 function GetDate() {
     const [date, setDate] = useState(new Date())
 
