@@ -3,12 +3,15 @@
 import React from 'react'
 import './progress_bar.css'
 
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ progress, style }) => {
     return (
-        <div className = "barContainer">
+        <div className = "barContainer" style={style}>
             <div
                 className = "progressBar"
-                style = {{ width: progress + '%' }}
+                style = {{ 
+                    width: progress + '%',
+                    borderRadius: 'inherit' 
+                }}
             >
                 <span className = "progressText">{progress}%</span>
             </div>

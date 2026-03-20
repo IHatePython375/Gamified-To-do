@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from 'react';
 
 // Gets the current date (used for Today and as a reference point for the week and month views)
-function GetDate() {
+function GetDate({ options = { weekday: 'long', month: 'long', day: 'numeric' }}) {
     const [date, setDate] = useState(new Date())
 
     useEffect(() => {
@@ -17,9 +17,7 @@ function GetDate() {
     }, []);
 
     return (
-        <div>
-            <h1>Current Date: {date.toDateString()}</h1>
-        </div>
+        <span>{date.toLocaleDateString('en-US', options)}</span>
     );
 }
 
