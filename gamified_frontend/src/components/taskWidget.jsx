@@ -1,63 +1,33 @@
-import React, {useContext} from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react'
 import { XPPerTask, TaskType } from './xpPerTask'
 import { getCategoryColorBg, getCategoryColorBorder } from './categoryHelper'
 import DrawAddTaskButton from './addTaskButton.jsx'
-import GetDate from '../track_tasks.jsx'
+import { useTasks } from '../TaskContext.jsx'
 import './modifyTaskButton.css'
 
 const categories = ['Homework', 'Chores', 'Work']
 
-/*Remove pre-loaded tasks after designing rest of interface, used just for */
-export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
-    const [tasks, setTasks] = React.useState(preLoadedTasks)
-    const [editingIndex, setEditingIndex] = React.useState(null)
+export default function DrawTodayPgWidget({ date }) {
+    const { tasks, addTask, toggleTask, updateTask, deleteTask } = useTasks()
+    const filteredTasks = tasks.filter(t => t.date === date)
+
+    const [editingId, setEditingId] = React.useState(null)
     const [taskName, setTaskName] = React.useState('')
     const [error, setError] = React.useState('')
     const [selectedCategory, setSelectedCategory] = React.useState('General')
     const [categoryOpen, setCategoryOpen] = React.useState(false)
 
     function addTaskToList(newTask) {
-        setTasks([...tasks, {...newTask, checked: false}])
+        addTask({ ...newTask, date: date })
     }
 
-
-    function toggleTask(index) {
-        setTasks(tasks.map((task, i) => {
-            if (i == index) {
-                return {...task, checked: !task.checked}
-            }
-            else {
-                return task
-            }
-        }))
-    }
-
-    function changeCategory(index, newCategory) {
-        setTasks(tasks.map((task, i) => {
-            if (i == index) {
-                return {...task, type: newCategory}
-            }
-            else {
-                return task
-            }
-        }))
-        setEditingIndex(null)
-    }
-
-    function handleSave(index) {
-        const updatedName = taskName.trim() || tasks[index].name
-        setTasks(tasks.map((task, i) => {
-            if (i == index) {
-                return { ...task, name: updatedName, type: selectedCategory }
-            } else {
-                return task
-            }
-        }))
+    function handleSave(id) {
+        const updatedName = taskName.trim() || filteredTasks.find(t => t.id === id).name
+        updateTask(id, { name: updatedName, type: selectedCategory })
         setTaskName('')
         setSelectedCategory('General')
         setError('')
-        setEditingIndex(null)
+        setEditingId(null)
     }
 
     function handleCancel() {
@@ -65,12 +35,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
         setSelectedCategory('General')
         setError('')
         setCategoryOpen(false)
-        setEditingIndex(null)
-    }
-
-    function handleDelete(index) {
-        setTasks(tasks.filter((_, i) => i !== index))
-        setEditingIndex(null)
+        setEditingId(null)
     }
 
     return (
@@ -90,10 +55,8 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                 boxSizing: 'border-box',
                 overflow: 'visible'
             }}>
-                {tasks.map((task, index) => {
-                    console.log('task value: ', task)
-                    return (
-                    <div key={index} style={{
+                {filteredTasks.map((task) => (
+                    <div key={task.id} style={{
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -112,15 +75,15 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                             paddingBottom: '4px'
                         }}>
                             <input type="checkbox" 
-                            checked={task.checked || false}
-                            onChange={() => toggleTask(index)}
-                            style={{ 
-                                width: '32px',
-                                height: '32px', 
-                                cursor: 'pointer', 
-                                margin: 0,
-                                flexShrink: 0,
-                            }} />
+                                checked={task.checked || false}
+                                onChange={() => toggleTask(task.id)}
+                                style={{ 
+                                    width: '32px',
+                                    height: '32px', 
+                                    cursor: 'pointer', 
+                                    margin: 0,
+                                    flexShrink: 0,
+                                }} />
                             <span style={{
                                 whiteSpace: 'nowrap',
                                 overflow: 'hidden',
@@ -154,10 +117,10 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                             <div style={{ position: 'relative' }}>
                                 <button
                                     onClick={() => {
-                                        if (editingIndex === index) {
-                                            setEditingIndex(null)
+                                        if (editingId === task.id) {
+                                            setEditingId(null)
                                         } else {
-                                            setEditingIndex(index)
+                                            setEditingId(task.id)
                                             setTaskName(task.name)
                                             setSelectedCategory(task.type)
                                         }
@@ -175,7 +138,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                     }}>
                                     <TaskType taskCategory={task.type} />
                                 </button>
-                                {editingIndex === index && (
+                                {editingId === task.id && (
                                     <div className="modifyTaskMenu">
                                         <div style={{
                                             fontSize: '26px',
@@ -236,10 +199,10 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                                         margin: '4px auto',
                                                         width: '100%',
                                                         boxSizing: 'border-box',
-                                                        }}>
-                                                        {categories.map((category, index) => (
+                                                    }}>
+                                                        {categories.map((category, i) => (
                                                             <div
-                                                                key={index}
+                                                                key={i}
                                                                 className="dropdownMenuItem"
                                                                 style={{
                                                                     background: getCategoryColorBg(category),
@@ -260,9 +223,8 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                                     </div>
                                                 )}
                                             </div>
-                                            <button onClick={() => handleSave(index)} style={{
+                                            <button onClick={() => handleSave(task.id)} style={{
                                                 borderRadius: '8px',
-                                                block: 'inline',
                                                 border: '2px solid var(--accent)',
                                                 padding: '0 12px',
                                                 width: '190px',
@@ -277,7 +239,6 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                             </button>
                                             <button onClick={handleCancel} style={{
                                                 borderRadius: '8px',
-                                                block: 'inline',
                                                 border: '2px solid #555',
                                                 padding: '0 12px',
                                                 width: '190px',
@@ -292,7 +253,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                                 Cancel
                                             </button>
                                         </div>
-                                        <button onClick={() => handleDelete(index)} style={{
+                                        <button onClick={() => deleteTask(task.id)} style={{
                                             borderRadius: '8px',
                                             border: '2px solid #9e0000',
                                             padding: '0',
@@ -313,8 +274,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                             </div>
                         </div>
                     </div>
-                    )
-                })}
+                ))}
                 <DrawAddTaskButton onAddTask={addTaskToList}/>
             </div>
         </div>
