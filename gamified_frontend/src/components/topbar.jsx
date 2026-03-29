@@ -6,7 +6,7 @@ import Profile from '../assets/Profile.png'
 import Profile2 from '../assets/Profile2.png'
 import ProgressBar from './progress_bar.jsx';
 
-function DropdownButton() {
+function DropdownButton({page}) {
     const { open, setOpen } = useContext(DropdownContext);
 
     return (
@@ -15,7 +15,7 @@ function DropdownButton() {
             onClick={() => setOpen(!open)}
             data-open={open}
         >
-            Home <span className="dropdownArrow"></span>
+            {page} <span className="dropdownArrow"></span>
         </button>
     );
 }
@@ -42,14 +42,29 @@ function DropdownMenu() {
             >
                 Home
             </Link>
-            <div className="dropdownMenuItem" style={itemStyle}>Item 2</div>
+            <Link 
+                to="/today" 
+                className="dropdownMenuItem"
+                onClick={() => setOpen(false)}
+                style={{ ...itemStyle, textDecoration: 'none', color: 'inherit' }}
+            >
+                Today
+            </Link>
+            <Link 
+                to="/Week" 
+                className="dropdownMenuItem"
+                onClick={() => setOpen(false)}
+                style={{ ...itemStyle, textDecoration: 'none', color: 'inherit' }}
+            >
+                Week
+            </Link>
             <div className="dropdownMenuItem">Item 3</div>
         </div>
     );
 }
 
 
-export default function DrawTopbar() {
+export default function DrawTopbar({page = 'Home'}) {
     return (
         <div style={{ width: '100%', position: 'relative', zIndex: 50 }}>
             <div style={{
@@ -66,7 +81,7 @@ export default function DrawTopbar() {
                     transform: 'translateY(-50%)',
                 }}>
                     <Dropdown direction="right">
-                        <DropdownButton />
+                        <DropdownButton page={page}/>
                         <DropdownMenu />
                     </Dropdown>
                 </div>

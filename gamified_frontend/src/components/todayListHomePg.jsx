@@ -29,7 +29,9 @@ export default function DrawTodayWidget({tasks=[]}) {
                 }}>
                     <u>Today's Tasks</u>
                 </div>
-                {tasks.map((task, index) => (
+                {tasks.map((task, index) => {
+                    console.log('task value: ', task)
+                    return (
                     <div key={index} style={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -44,8 +46,9 @@ export default function DrawTodayWidget({tasks=[]}) {
                             gap: '8px', 
                             cursor: 'pointer', 
                             fontSize: '28px',
-                            width: '70%',
+                            width: '65%',
                             flexShrink: 0,
+                            paddingBottom: '4px'
                         }}>
                             <input type="checkbox" style={{ 
                                 width: '32px',
@@ -54,7 +57,17 @@ export default function DrawTodayWidget({tasks=[]}) {
                                 margin: 0,
                                 flexShrink: 0,
                             }} />
-                            <span>{task}</span>
+                            <span style={{
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                minWidth: 0,
+                                flex: 1,
+                                color: 'var(--text-h)',
+                                lineHeight: '1.4'
+                            }}>
+                                {task.name}
+                            </span>
                         </label>
                         <div style={{
                             marginLeft: 'auto',
@@ -71,11 +84,11 @@ export default function DrawTodayWidget({tasks=[]}) {
                                 display: 'flex',
                                 alignItems: 'center',
                             }}>
-                                <XPPerTask taskName={task} />
+                                <XPPerTask taskCategory={task.type} />
                             </div>
                             <div style={{
-                                background: `${getCategoryColorBg(task)}`,
-                                border: `2px solid ${getCategoryColorBorder(task)}`,
+                                background: `${getCategoryColorBg(task.type)}`,
+                                border: `2px solid ${getCategoryColorBorder(task.type)}`,
                                 borderRadius: '8px',
                                 padding: '4px 0',
                                 display: 'flex',
@@ -86,12 +99,13 @@ export default function DrawTodayWidget({tasks=[]}) {
                                 color: 'var(--text-h)',
                                 marginRight: '16px',
                             }}>
-                                <TaskType taskName={task} />
+                                <TaskType taskCategory={task.type} />
                             </div>
                         </div>
                     </div>
-                ))}
-                <Link to="/"
+                    )
+                })}
+                <Link to="/Today"
                     style={{
                         width: '40%',
                         height: '24px',

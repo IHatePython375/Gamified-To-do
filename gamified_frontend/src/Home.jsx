@@ -9,7 +9,7 @@ import { XPPerTask } from './components/xpPerTask.jsx';
 export default function Home() {
     return (
         <div className="app">
-            <DrawTopbar />
+            <DrawTopbar page="Home"/>
             <main id="center">
                 <div style={{
                     position: 'relative',
@@ -71,9 +71,9 @@ export default function Home() {
                 </div>
                 <div style={{width: '100%'}}>
                     <DrawTodayWidget tasks={[
-                        'Task 1',
-                        'Task 2',
-                        'Task 3'
+                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
+                        {name: 'Task 2', type: 'Chores'},
+                        {name: 'Task 3', type: 'Work'}
                     ]}/>
                 </div>
             </main>

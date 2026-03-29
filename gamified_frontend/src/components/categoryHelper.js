@@ -1,29 +1,20 @@
 function GetXP() {
     return {
-        'Task 1': {xp: 250, type: 'Homework'},
-        'Task 2': {xp: 100, type: 'Chores'},
-        'Task 3': {xp: 300, type: 'Work'}
+        'Homework': {xp: 250},
+        'Chores': {xp: 100},
+        'Work': {xp: 300}
     }
 }
 
-export function getCategoryColorBorder(taskName) {
-    const xpMap = GetXP()
-    let category
-    if (xpMap[taskName] != null) {
-        category = xpMap[taskName].type
-    }
-    else {
-        category = 'General'
-    }
-
+export function getCategoryColorBorder(taskCategory) {
     let color
-    if (category == 'Homework') {
+    if (taskCategory == 'Homework') {
         color = 'rgb(165, 0, 0)'
     }
-    else if (category == 'Chores') {
+    else if (taskCategory == 'Chores') {
         color = 'rgb(98, 0, 150)'
     }
-    else if (category == 'Work') {
+    else if (taskCategory == 'Work') {
         color = 'rgb(7, 54, 4)'
     }
     else {
@@ -33,24 +24,15 @@ export function getCategoryColorBorder(taskName) {
     return color
 }
 
-export function getCategoryColorBg(taskName) {
-    const xpMap = GetXP()
-    let category
-    if (xpMap[taskName] != null) {
-        category = xpMap[taskName].type
-    }
-    else {
-        category = 'General'
-    }
-
+export function getCategoryColorBg(taskCategory) {
     let color
-    if (category == 'Homework') {
+    if (taskCategory == 'Homework') {
         color = 'rgba(165, 0, 0, 0.7)'
     }
-    else if (category == 'Chores') {
+    else if (taskCategory == 'Chores') {
         color = 'rgba(98, 0, 150, 0.7)'
     }
-    else if (category == 'Work') {
+    else if (taskCategory == 'Work') {
         color = 'rgba(7, 54, 4, 0.7)'
     }
     else {

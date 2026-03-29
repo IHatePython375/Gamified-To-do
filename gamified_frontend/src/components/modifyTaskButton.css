@@ -1,0 +1,86 @@
+.modifyifyTask {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+}
+
+.modifyifyTaskTrigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.modifyTaskButton {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    margin-left: 7px;
+    padding: 5px 10px;
+    font-size: 28px;
+    border-radius: 5px;
+    color: var(--text-h);
+    background: var(--accent);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.modifyTaskButton:focus-visible {
+    outline: 2px solid var(--accent-border);
+}
+
+.modifyTaskButton:hover {
+    background: var(--accent-border);
+}
+
+.modifyTaskButton[data-open="true"] {
+    border-color: var(--accent-border);
+}
+
+.modifyTaskMenu {
+    position: absolute;
+    bottom: 0;
+    right: 100%;
+    margin-right: 4px;
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    font-size: 24px;
+    gap: 8px;
+    z-index: 51;
+}
+
+.modifyTaskMenuItem {
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.modifyTaskMenuItem:hover {
+    background: var(--accent);
+    color: var(--text-h);
+}
+
+.modifyTask.right .modifyTaskMenu {
+    left: 100%;
+}
+
+.modifyTaskArrow {
+    display: inline-block;
+    margin-left: 12px;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+}
+
+.modifyTaskButton[data-open="true"] .modifyTaskArrow {
+    transform: rotate(-45deg);
+}
