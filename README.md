@@ -1,4 +1,4 @@
-#Pages built out, connecting functinality remains:
+# Pages built out, connecting functinality remains:
 
 1. Link up tasks so any tasks added on either today, week, or month pages are visible and conditions the same amongst all of them
 2. Progress bars should get the number of tasks completed for their respective periods (today & week) and update when the checkbox is checked
