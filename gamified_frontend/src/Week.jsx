@@ -6,6 +6,8 @@ import GetDate from './track_tasks.jsx'
 import DrawTodayPgWidget from './components/taskWidget.jsx';
 import { XPPerTask } from './components/xpPerTask.jsx';
 import DrawAddTaskButton from './components/addTaskButton.jsx';
+import { useTasks } from './TaskContext.jsx'
+
 
 export default function Week() {
     const currDay = new Date()
@@ -19,6 +21,24 @@ export default function Week() {
         return date.toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
     }
 
+    function getDayISO(offset) {
+        const d = new Date(startOfWeek)
+        d.setDate(startOfWeek.getDate() + offset)
+        return d.toLocaleDateString('en-CA') 
+    }
+
+    const { tasks } = useTasks()
+    const weekTasks = tasks.filter(t => {
+        const taskDate = new Date(t.date)
+        const weekEnd = new Date(startOfWeek)
+        weekEnd.setDate(startOfWeek.getDate() + 6)
+        return taskDate >= startOfWeek && taskDate <= weekEnd
+    })
+    const weekCompleted = weekTasks.filter(t => t.checked).length
+    const weekProgress = weekTasks.length === 0 ? 0 : Math.round((weekCompleted / weekTasks.length) * 100)
+
+
+
     return (
         <div className="app">
             <DrawTopbar page="Week"/>
@@ -31,7 +51,7 @@ export default function Week() {
                     width: '100%',
                     marginTop: '12px'
                 }}>
-                    <ProgressBar progress={50} 
+                    <ProgressBar progress={weekProgress} 
                         style={{
                             flex: 1,
                             height: '30px',
@@ -46,7 +66,7 @@ export default function Week() {
                     display: 'block',
                     textAlign: 'center',
                 }}>
-                    10/20 tasks complete for the week
+                    {weekCompleted}/{weekTasks.length} tasks complete for the week
                 </span>
                 <div>
 
@@ -73,11 +93,7 @@ export default function Week() {
                             }
                         })()}
                     </div>
-                    <DrawTodayPgWidget tasks={[
-                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                        {name: 'Task 2', type: 'Chores'},
-                        {name: 'Task 3', type: 'Work'},
-                    ]}/>
+                    <DrawTodayPgWidget date={getDayISO(0)} />
                 </div>
                 <div>
                     <div style={{
@@ -103,11 +119,7 @@ export default function Week() {
                             }
                         })()}
                     </div>
-                    <DrawTodayPgWidget tasks={[
-                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                        {name: 'Task 2', type: 'Chores'},
-                        {name: 'Task 3', type: 'Work'},
-                    ]}/>
+                    <DrawTodayPgWidget date={getDayISO(1)} />
                 </div>
                 <div>
                     <div style={{
@@ -133,11 +145,8 @@ export default function Week() {
                             }
                         })()}
                     </div>
-                    <DrawTodayPgWidget tasks={[
-                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                        {name: 'Task 2', type: 'Chores'},
-                        {name: 'Task 3', type: 'Work'},
-                    ]}/>
+                    <DrawTodayPgWidget date={getDayISO(2)} />
+
                 </div>
                 <div>
                     <div style={{
@@ -154,19 +163,10 @@ export default function Week() {
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        {(() => {
-                            if (3 == (dayOfWeek + 6) % 7) {
-                                return <u>Today - Thursday, {getDay(3)}</u>
-                            }
-                            else {
-                                return <u>Thursday - {getDay(3)}</u>
-                            }
-                        })()}                    </div>
-                    <DrawTodayPgWidget tasks={[
-                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                        {name: 'Task 2', type: 'Chores'},
-                        {name: 'Task 3', type: 'Work'},
-                    ]}/>
+                        <u>Thursday - {getDay(3)}</u>
+                    </div>
+                    <DrawTodayPgWidget date={getDayISO(3)} />
+
                 </div>
                 <div>
                     <div style={{
@@ -183,19 +183,10 @@ export default function Week() {
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        {(() => {
-                            if (4 == (dayOfWeek + 6) % 7) {
-                                return <u>Today - Friday, {getDay(4)}</u>
-                            }
-                            else {
-                                return <u>Friday - {getDay(4)}</u>
-                            }
-                        })()}                    </div>
-                    <DrawTodayPgWidget tasks={[
-                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                        {name: 'Task 2', type: 'Chores'},
-                        {name: 'Task 3', type: 'Work'},
-                    ]}/>
+                        <u>Friday - {getDay(4)}</u>
+                    </div>
+                    <DrawTodayPgWidget date={getDayISO(4)} />
+
                 </div>
                 <div>
                     <div style={{
@@ -212,19 +203,10 @@ export default function Week() {
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        {(() => {
-                            if (5 == (dayOfWeek + 6) % 7) {
-                                return <u>Today - Saturday, {getDay(5)}</u>
-                            }
-                            else {
-                                return <u>Saturday - {getDay(5)}</u>
-                            }
-                        })()}                    </div>
-                    <DrawTodayPgWidget tasks={[
-                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                        {name: 'Task 2', type: 'Chores'},
-                        {name: 'Task 3', type: 'Work'},
-                    ]}/>
+                        <u>Saturday - {getDay(5)}</u>
+                    </div>
+                    <DrawTodayPgWidget date={getDayISO(5)} />
+
                 </div>
                 <div>
                     <div style={{
@@ -241,19 +223,9 @@ export default function Week() {
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        {(() => {
-                            if (6 == (dayOfWeek + 6) % 7) {
-                                return <u>Today - Sunday, {getDay(6)}</u>
-                            }
-                            else {
-                                return <u>Sunday - {getDay(6)}</u>
-                            }
-                        })()}                    </div>
-                    <DrawTodayPgWidget tasks={[
-                        {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                        {name: 'Task 2', type: 'Chores'},
-                        {name: 'Task 3', type: 'Work'},
-                    ]}/>
+                        <u>Sunday - {getDay(6)}</u>
+                    </div>
+                    <DrawTodayPgWidget date={getDayISO(6)} />
                 </div>
             </main>
         </div>

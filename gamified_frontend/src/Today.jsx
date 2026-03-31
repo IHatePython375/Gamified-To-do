@@ -6,9 +6,18 @@ import GetDate, {getTodayKey} from './track_tasks.jsx'
 import DrawTodayPgWidget from './components/taskWidget.jsx';
 import { XPPerTask } from './components/xpPerTask.jsx';
 import DrawAddTaskButton from './components/addTaskButton.jsx';
+import { useTasks } from './TaskContext.jsx'
+
 
 export default function Today() {
     const todayKey = getTodayKey()
+    const todayStr = new Date().toLocaleDateString('en-CA'); 
+
+    const { tasks } = useTasks()
+    const todayCompleted = tasks.filter(t => t.date === todayStr && t.checked).length
+    const todayProgress = tasks.filter(t => t.date === todayStr).length === 0 ? 0 : Math.round((todayCompleted / tasks.filter(t => t.date === todayStr).length) * 100)
+
+
     return (
         <div className="app">
             <DrawTopbar page="Today"/>
@@ -21,7 +30,7 @@ export default function Today() {
                     width: '100%',
                     marginTop: '12px'
                 }}>
-                    <ProgressBar progress={50} 
+                    <ProgressBar progress={todayProgress} 
                         style={{
                             flex: 1,
                             height: '30px',
@@ -36,7 +45,7 @@ export default function Today() {
                     display: 'block',
                     textAlign: 'center',
                 }}>
-                    2/4 tasks complete for the day
+                    {todayCompleted}/{tasks.filter(t => t.date === todayStr).length} tasks complete for the day
                 </span>
                 <div>
                     <div style={{
@@ -49,11 +58,7 @@ export default function Today() {
                         <u><GetDate options={{weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'}}/></u>
                     </div>
                     <div style={{width: '100%'}}>
-                        <DrawTodayPgWidget tasks={[
-                            {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
-                            {name: 'Task 2', type: 'Chores'},
-                            {name: 'Task 3', type: 'Work'},
-                        ]}/>
+                        <DrawTodayPgWidget date={todayStr} />
                     </div>
                 </div>
             </main>
