@@ -14,7 +14,6 @@ export default function Month() {
     const [selectedDate, setSelectedDate] = useState(new Date())
     const [showDayWidget, setShowDayWidget] = useState(false)
     const [widgetDateKey, setWidgetDateKey] = useState(null)
-    const [tasksByDate, setTasksByDate] = useState({})
 
     const dayClicked = (date) => {
         setSelectedDate(date)
@@ -25,6 +24,14 @@ export default function Month() {
     const closeWidget = () => {
         setShowDayWidget(false)
         setSelectedDate(null)
+    }
+
+    let dateStr
+    if (selectedDate) {
+        dateStr = selectedDate.toLocaleDateString('en-US')
+    }
+    else {
+        dateStr = null
     }
 
     return (
@@ -113,10 +120,8 @@ export default function Month() {
                     marginTop: 'auto'
                 }}>
                     <DrawTodayPgWidget
-                        tasks={tasksByDate[widgetDateKey] || []}
-                        onTasksChange={(updated) => setTasksByDate(prev => ({...prev, [widgetDateKey]: updated}))}
-                        key={widgetDateKey}
-                    />
+                        date={dateStr}
+                        key={dateStr}                    />
                 </div>
             </div>
         </div>

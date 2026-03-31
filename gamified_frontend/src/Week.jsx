@@ -24,7 +24,7 @@ export default function Week() {
     function getDayISO(offset) {
         const d = new Date(startOfWeek)
         d.setDate(startOfWeek.getDate() + offset)
-        return d.toLocaleDateString('en-CA') 
+        return d.toLocaleDateString('en-US') 
     }
 
     const { tasks } = useTasks()

@@ -11,12 +11,11 @@ import { useTasks } from './TaskContext.jsx'
 
 export default function Today() {
     const todayKey = getTodayKey()
-    const todayStr = new Date().toLocaleDateString('en-CA'); 
+    const todayStr = new Date().toLocaleDateString('en-US'); 
 
     const { tasks } = useTasks()
     const todayCompleted = tasks.filter(t => t.date === todayStr && t.checked).length
     const todayProgress = tasks.filter(t => t.date === todayStr).length === 0 ? 0 : Math.round((todayCompleted / tasks.filter(t => t.date === todayStr).length) * 100)
-
 
     return (
         <div className="app">

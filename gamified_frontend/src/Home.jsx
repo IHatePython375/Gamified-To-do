@@ -10,7 +10,7 @@ import { useTasks } from './TaskContext.jsx'
 
 export default function Home() {
     const { tasks } = useTasks()
-    const todayStr = new Date().toLocaleDateString('en-CA')
+    const todayStr = new Date().toLocaleDateString('en-US')
     const todayTasks = tasks.filter(t => t.date === todayStr)
 
     const todayProgress = todayTasks.length === 0 ? 0 : Math.round((todayTasks.filter(t => t.checked).length / todayTasks.length) * 100)

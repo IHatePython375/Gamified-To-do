@@ -23,11 +23,11 @@ export default function DrawTodayPgWidget({ date }) {
     React.useEffect(() => {
         function handleClickOutside(e) {
             if (modifyTaskRef.current && !modifyTaskRef.current.contains(e.target)) {
-                setEditingIndex(null)
+                seteditingId(null)
                 setCategoryOpen(false)
             }
         }
-        if (editingIndex != null) {
+        if (editingId != null) {
         const timer = setTimeout(() => {
             window.addEventListener('click', handleClickOutside)
         }, 0)
@@ -37,13 +37,13 @@ export default function DrawTodayPgWidget({ date }) {
         }
     }
     return () => window.removeEventListener('click', handleClickOutside)
-    }, [editingIndex])
+    }, [editingId])
 
-    React.useEffect(() => {
-        if (onTasksChange) {
-            onTasksChange(tasks)
-        }
-    }, [tasks])
+    // React.useEffect(() => {
+    //     if (onTasksChange) {
+    //         onTasksChange(tasks)
+    //     }
+    // }, [tasks])
 
     function addTaskToList(newTask) {
         addTask({ ...newTask, date: date })

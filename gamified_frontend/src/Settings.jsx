@@ -309,7 +309,7 @@ function CategoryList() {
     )
 }
 
-function AccountChanges() {
+function useAccountChanges() {
     const { username, saveUsername, savePassword, getPassword } = useAccount()
     const [newUsername, setUsername] = useState(username)
     const [newPassword, setPassword] = useState('')
@@ -335,7 +335,7 @@ function AccountChanges() {
 }
 
 export default function Settings() {
-    const {newUsername, setUsername, newPassword, setPassword, saved, saveAccountChanges, cancelAccountChanges} = AccountChanges()
+    const {newUsername, setUsername, newPassword, setPassword, saved, saveAccountChanges, cancelAccountChanges} = useAccountChanges()
     const [darkApplied, setDarkApplied] = useState(() => {
         const savedTheme = localStorage.getItem('theme')
         if (savedTheme == 'dark') {
