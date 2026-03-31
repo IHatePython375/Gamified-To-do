@@ -41,7 +41,7 @@
     top: 0;
     left: 100%;
     margin-left: 4px;
-    background: #222;
+    background: var(--widgetBackground);
     border: 1px solid #555;
     border-radius: 8px;
     padding: 6px;
@@ -74,8 +74,8 @@
     margin-left: 12px;
     width: 6px;
     height: 6px;
-    border-right: 2px solid white;
-    border-bottom: 2px solid white;
+    border-right: 2px solid var(--dropdownButtonArrow);
+    border-bottom: 2px solid var(--dropdownButtonArrow);
     transform: rotate(45deg);
     transition: transform 0.2s;
 }

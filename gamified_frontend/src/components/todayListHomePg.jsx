@@ -1,9 +1,10 @@
 import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
 import { XPPerTask, TaskType } from './xpPerTask'
-import { getCategoryColorBg, getCategoryColorBorder } from './categoryHelper'
+import { useCategoryColors } from './categoryHelper.jsx'
 
 export default function DrawTodayWidget({tasks=[]}) {
+    const {getCategoryColorBg, getCategoryColorBorder} = useCategoryColors()
     return (
         <div style={{ width: '100%', position: 'relative', zIndex: 40 }}>
             <div style={{
@@ -11,7 +12,7 @@ export default function DrawTodayWidget({tasks=[]}) {
                 marginTop: '32px',
                 marginBottom: '24px',
                 height: 'calc(100vh - 312px)',
-                background: '#222',
+                background: 'var(--widgetBackground)',
                 border: '2px solid #555',
                 borderRadius: '8px',
                 padding: '8px',
@@ -77,7 +78,7 @@ export default function DrawTodayWidget({tasks=[]}) {
                             gap: '8px',
                         }}>
                             <div style={{
-                                background: '#333',
+                                background: 'var(--button-bg)',
                                 border: '1px solid var(--accent)',
                                 borderRadius: '8px',
                                 padding: '4px 12px',

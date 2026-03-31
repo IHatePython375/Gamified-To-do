@@ -1,17 +1,17 @@
-.addTask {
+.modifyifyCategory {
     position: relative;
     display: inline-flex;
     align-items: center;
     width: fit-content;
 }
 
-.addTaskTrigger {
+.modifyifyCategoryTrigger {
     display: inline-flex;
     align-items: center;
     gap: 2px;
 }
 
-.addTaskButton {
+.modifyCategoryButton {
     display: flex; 
     align-items: center;
     justify-content: center;
@@ -25,62 +25,62 @@
     transition: border-color 0.3s;
 }
 
-.addTaskButton:focus-visible {
+.modifyCategoryButton:focus-visible {
     outline: 2px solid var(--accent-border);
 }
 
-.addTaskButton:hover {
+.modifyCategoryButton:hover {
     background: var(--accent-border);
 }
 
-.addTaskButton[data-open="true"] {
+.modifyCategoryButton[data-open="true"] {
     border-color: var(--accent-border);
 }
 
-.addTaskMenu {
+.modifyCategoryMenu {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 100%;
-    margin-left: 4px;
+    margin-left: 2px;
     background: var(--widgetBackground);
-    border: 1px solid #222;
+    border: 1px solid #555;
     border-radius: 8px;
     padding: 6px;
     display: flex;
     flex-direction: column;
-    width: 420px;
+    width: 240px;
     font-size: 24px;
     gap: 8px;
     z-index: 51;
 }
 
-.addTaskMenuItem {
+.modifyCategoryMenuItem {
     padding: 6px 8px;
     border-radius: 4px;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.addTaskMenuItem:hover {
+.modifyCategoryMenuItem:hover {
     background: var(--accent);
     color: var(--text-h);
 }
 
-.addTask.right .addTaskMenu {
+.modifyCategory.right .modifyCategoryMenu {
     left: 100%;
 }
 
-.addTaskArrow {
+.modifyCategoryArrow {
     display: inline-block;
     margin-left: 12px;
     width: 6px;
     height: 6px;
-    border-right: 2px solid var(--dropdownButtonArrow);
-    border-bottom: 2px solid var(--dropdownButtonArrow);
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
     transform: rotate(45deg);
     transition: transform 0.2s;
 }
 
-.addTaskButton[data-open="true"] .addTaskArrow {
+.modifyCategoryButton[data-open="true"] .modifyCategoryArrow {
     transform: rotate(-45deg);
 }

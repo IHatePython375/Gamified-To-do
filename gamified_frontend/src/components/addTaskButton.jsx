@@ -2,7 +2,7 @@
 import React, {useContext} from 'react'
 import './addTaskButton.css'
 import { TaskType } from './xpPerTask'
-import { getCategoryColorBg, getCategoryColorBorder } from './categoryHelper'
+import { useCategoryColors } from './categoryHelper.jsx'
 import Dropdown, {DropdownContext} from './dropdown.jsx'
 
 const AddTaskContext = React.createContext();
@@ -56,6 +56,7 @@ function AddTaskMenu({ open, setOpen, onAddTask }) {
     const [categoryOpen, setCategoryOpen] = React.useState(false)
     const [taskName, setTaskName] = React.useState('')
     const [error, setError] = React.useState('')
+    const {getCategoryColorBg, getCategoryColorBorder} = useCategoryColors()
 
     if (!open) {
         return null;
@@ -98,7 +99,7 @@ function AddTaskMenu({ open, setOpen, onAddTask }) {
                         color: 'var(--text-h)',
                         padding: '2px 8px',
                         marginLeft: '8px',
-                        background: '#333',
+                        background: 'var(--xpWidgetBg)',
                         border: '1px solid #555',
                         borderRadius: '4px',
                         width: '80%'
@@ -173,7 +174,7 @@ function AddTaskMenu({ open, setOpen, onAddTask }) {
                     width: '190px',
                     fontSize: '20px',
                     cursor: 'pointer',
-                    color: 'white',
+                    color: 'var(--text-h)',
                     boxSizing: 'border-box',
                     background: 'var(--accent)',
                     marginTop: '18px'
@@ -188,7 +189,7 @@ function AddTaskMenu({ open, setOpen, onAddTask }) {
                     width: '190px',
                     fontSize: '20px',
                     cursor: 'pointer',
-                    color: 'white',
+                    color: 'var(--text-h)',
                     boxSizing: 'border-box',
                     background: '#555',
                     marginTop: '18px',

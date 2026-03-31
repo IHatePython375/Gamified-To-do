@@ -2,12 +2,13 @@ import React from 'react';
 import './Today.css';
 import DrawTopbar from './components/topbar.jsx';
 import ProgressBar from './components/progress_bar.jsx';
-import GetDate from './track_tasks.jsx'
+import GetDate, {getTodayKey} from './track_tasks.jsx'
 import DrawTodayPgWidget from './components/taskWidget.jsx';
 import { XPPerTask } from './components/xpPerTask.jsx';
 import DrawAddTaskButton from './components/addTaskButton.jsx';
 
 export default function Today() {
+    const todayKey = getTodayKey()
     return (
         <div className="app">
             <DrawTopbar page="Today"/>

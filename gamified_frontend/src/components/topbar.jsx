@@ -5,6 +5,7 @@ import './levelProgression.css'
 import Profile from '../assets/Profile.png'
 import Profile2 from '../assets/Profile2.png'
 import ProgressBar from './progress_bar.jsx';
+import { useAccount } from './storeAccountInfo.jsx'
 
 function DropdownButton({page}) {
     const { open, setOpen } = useContext(DropdownContext);
@@ -38,7 +39,7 @@ function DropdownMenu() {
                 to="/" 
                 className="dropdownMenuItem"
                 onClick={() => setOpen(false)}
-                style={{ ...itemStyle, textDecoration: 'none', color: 'inherit' }}
+                style={{ ...itemStyle, textDecoration: 'none', color: 'var(--text-h)' }}
             >
                 Home
             </Link>
@@ -46,7 +47,7 @@ function DropdownMenu() {
                 to="/today" 
                 className="dropdownMenuItem"
                 onClick={() => setOpen(false)}
-                style={{ ...itemStyle, textDecoration: 'none', color: 'inherit' }}
+                style={{ ...itemStyle, textDecoration: 'none', color: 'var(--text-h)' }}
             >
                 Today
             </Link>
@@ -54,17 +55,25 @@ function DropdownMenu() {
                 to="/Week" 
                 className="dropdownMenuItem"
                 onClick={() => setOpen(false)}
-                style={{ ...itemStyle, textDecoration: 'none', color: 'inherit' }}
+                style={{ ...itemStyle, textDecoration: 'none', color: 'var(--text-h)' }}
             >
                 Week
             </Link>
-            <div className="dropdownMenuItem">Item 3</div>
+            <Link 
+                to="/Month" 
+                className="dropdownMenuItem"
+                onClick={() => setOpen(false)}
+                style={{ ...itemStyle, textDecoration: 'none', color: 'var(--text-h)' }}
+            >
+                Month
+            </Link>
         </div>
     );
 }
 
 
 export default function DrawTopbar({page = 'Home'}) {
+    const {username} = useAccount()
     return (
         <div style={{ width: '100%', position: 'relative', zIndex: 50 }}>
             <div style={{
@@ -105,13 +114,16 @@ export default function DrawTopbar({page = 'Home'}) {
                         Bronze II
                     </span>
                     <div className="badgeHover">
-                        <img src={Profile2} alt="Profile2" style={{ width: '60px', height: '60px' }}/>
-                        <div className="badgeHoverMenu">
+                        <img src={Profile2} alt="Profile2" style={{ 
+                            width: '60px', 
+                            height: '60px' 
+                        }}/>
+                        <div className="badgeHoverMenu" style={{backgroundColor: 'var(--bg)'}}>
                             <span style={{
                                 paddingTop: '8px',
                                 fontSize: '24px',
                                 textAlign: 'center',
-                                color: 'var(--text-h)'
+                                color: 'var(--text-h)',
                             }}>
                                 Next Level:
                             </span>
@@ -155,7 +167,7 @@ export default function DrawTopbar({page = 'Home'}) {
                     top: 'calc(50% + 8px)',
                     transform: 'translateY(-50%)',
                 }}>
-                    <Link to="/" className="profileLink" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                    <Link to="/Settings" className="profileLink" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
                         <span style={{
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
@@ -164,7 +176,7 @@ export default function DrawTopbar({page = 'Home'}) {
                             fontSize: '24px',
                             color: 'var(--text-h)'
                         }}>
-                            TestName
+                            {username}
                         </span>
                         <img src={Profile} alt="Profile" className="profileButtonImg" style={{ width: '60px', height: '60px', left: '6px' }}/>
                     </Link>

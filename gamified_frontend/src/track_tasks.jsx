@@ -21,4 +21,8 @@ function GetDate({ options = { weekday: 'long', month: 'long', day: 'numeric' }}
     );
 }
 
+export function getTodayKey() {
+    return new Date().toDateString()
+}
+
 export default GetDate;

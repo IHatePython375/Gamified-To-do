@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
+import { useCategories } from './categoryHelper.jsx'
 
 function GetXP() {
     return {
@@ -10,10 +11,11 @@ function GetXP() {
 }
 
 export function XPPerTask({taskCategory}) {
-    const xpMap = GetXP()
+    const {categories} = useCategories()
+    const found = categories.find(c => c.name == taskCategory)
     let xp
-    if (xpMap[taskCategory] != null) {
-        xp = xpMap[taskCategory].xp
+    if (found) {
+        xp = found.xp
     }
     else {
         xp = 100
@@ -22,7 +24,6 @@ export function XPPerTask({taskCategory}) {
     return (
         <span style={{
             color: 'var(--accent)',
-
         }}>
             +{xp} XP
         </span>

@@ -1,15 +1,20 @@
 :root {
   --text: #6b6375;
   --text-h: #08060d;
-  --bg: #fff;
+  --bg: #dadada;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
-  --accent: #079653;
+  --accent: #066539;
   --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent-border: rgba(46, 140, 82, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --widget-color: rgba(167, 167, 167, 0.6);
+  --button-bg: #aeaeae;
+  --dropdownButtonArrow: black;
+  --widgetBackground: #888;
+  --xpWidgetBg: #666;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -43,6 +48,11 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --widget-color: rgba(0, 0, 0, 0.6);
+    --button-bg: #222;
+    --dropdownButtonArrow: white;
+    --widgetBackground: #222;
+    --xpWidgetBg: #333;
   }
 
   #social .button-icon {

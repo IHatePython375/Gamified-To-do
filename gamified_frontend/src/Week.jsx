@@ -14,9 +14,9 @@ export default function Week() {
     startOfWeek.setDate(currDay.getDate() - (dayOfWeek + 6) % 7)
 
     function getDay(offset) {
-        const d = new Date(startOfWeek)
-        d.setDate(startOfWeek.getDate() + offset)
-        return d.toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
+        const date = new Date(startOfWeek)
+        date.setDate(startOfWeek.getDate() + offset)
+        return date.toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
     }
 
     return (
@@ -49,14 +49,29 @@ export default function Week() {
                     10/20 tasks complete for the week
                 </span>
                 <div>
+
                     <div style={{
-                        color: 'var(--text-h)',
+                        color: (() => {
+                            if (0 == (dayOfWeek + 6) % 7) {
+                                return 'var(--accent)'
+                            }
+                            else {
+                                return 'var(--text-h)'
+                            }
+                        })(),
                         fontSize: '36px',
                         marginTop: '60px',
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        <u>Monday - {getDay(0)}</u>
+                        {(() => {
+                            if (0 == (dayOfWeek + 6) % 7) {
+                                return <u>Today - Monday, {getDay(0)}</u>
+                            }
+                            else {
+                                return <u>Monday - {getDay(0)}</u>
+                            }
+                        })()}
                     </div>
                     <DrawTodayPgWidget tasks={[
                         {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
@@ -66,13 +81,27 @@ export default function Week() {
                 </div>
                 <div>
                     <div style={{
-                        color: 'var(--text-h)',
+                        color: (() => {
+                            if (1 == (dayOfWeek + 6) % 7) {
+                                return 'var(--accent)'
+                            }
+                            else {
+                                return 'var(--text-h)'
+                            }
+                        })(),
                         fontSize: '36px',
                         marginTop: '60px',
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        <u>Tuesday - {getDay(1)}</u>
+                        {(() => {
+                            if (1 == (dayOfWeek + 6) % 7) {
+                                return <u>Today - Tuesday, {getDay(1)}</u>
+                            }
+                            else {
+                                return <u>Tuesday - {getDay(1)}</u>
+                            }
+                        })()}
                     </div>
                     <DrawTodayPgWidget tasks={[
                         {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
@@ -82,13 +111,27 @@ export default function Week() {
                 </div>
                 <div>
                     <div style={{
-                        color: 'var(--text-h)',
+                        color: (() => {
+                            if (2 == (dayOfWeek + 6) % 7) {
+                                return 'var(--accent)'
+                            }
+                            else {
+                                return 'var(--text-h)'
+                            }
+                        })(),
                         fontSize: '36px',
                         marginTop: '60px',
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        <u>Wednesday - {getDay(2)}</u>
+                        {(() => {
+                            if (2 == (dayOfWeek + 6) % 7) {
+                                return <u>Today - Wednesday, {getDay(2)}</u>
+                            }
+                            else {
+                                return <u>Wednesday - {getDay(2)}</u>
+                            }
+                        })()}
                     </div>
                     <DrawTodayPgWidget tasks={[
                         {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
@@ -98,14 +141,27 @@ export default function Week() {
                 </div>
                 <div>
                     <div style={{
-                        color: 'var(--text-h)',
+                        color: (() => {
+                            if (3 == (dayOfWeek + 6) % 7) {
+                                return 'var(--accent)'
+                            }
+                            else {
+                                return 'var(--text-h)'
+                            }
+                        })(),
                         fontSize: '36px',
                         marginTop: '60px',
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        <u>Thursday - {getDay(3)}</u>
-                    </div>
+                        {(() => {
+                            if (3 == (dayOfWeek + 6) % 7) {
+                                return <u>Today - Thursday, {getDay(3)}</u>
+                            }
+                            else {
+                                return <u>Thursday - {getDay(3)}</u>
+                            }
+                        })()}                    </div>
                     <DrawTodayPgWidget tasks={[
                         {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
                         {name: 'Task 2', type: 'Chores'},
@@ -114,14 +170,27 @@ export default function Week() {
                 </div>
                 <div>
                     <div style={{
-                        color: 'var(--text-h)',
+                        color: (() => {
+                            if (4 == (dayOfWeek + 6) % 7) {
+                                return 'var(--accent)'
+                            }
+                            else {
+                                return 'var(--text-h)'
+                            }
+                        })(),
                         fontSize: '36px',
                         marginTop: '60px',
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        <u>Friday - {getDay(4)}</u>
-                    </div>
+                        {(() => {
+                            if (4 == (dayOfWeek + 6) % 7) {
+                                return <u>Today - Friday, {getDay(4)}</u>
+                            }
+                            else {
+                                return <u>Friday - {getDay(4)}</u>
+                            }
+                        })()}                    </div>
                     <DrawTodayPgWidget tasks={[
                         {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
                         {name: 'Task 2', type: 'Chores'},
@@ -130,14 +199,27 @@ export default function Week() {
                 </div>
                 <div>
                     <div style={{
-                        color: 'var(--text-h)',
+                        color: (() => {
+                            if (5 == (dayOfWeek + 6) % 7) {
+                                return 'var(--accent)'
+                            }
+                            else {
+                                return 'var(--text-h)'
+                            }
+                        })(),
                         fontSize: '36px',
                         marginTop: '60px',
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        <u>Saturday - {getDay(5)}</u>
-                    </div>
+                        {(() => {
+                            if (5 == (dayOfWeek + 6) % 7) {
+                                return <u>Today - Saturday, {getDay(5)}</u>
+                            }
+                            else {
+                                return <u>Saturday - {getDay(5)}</u>
+                            }
+                        })()}                    </div>
                     <DrawTodayPgWidget tasks={[
                         {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
                         {name: 'Task 2', type: 'Chores'},
@@ -146,14 +228,27 @@ export default function Week() {
                 </div>
                 <div>
                     <div style={{
-                        color: 'var(--text-h)',
+                        color: (() => {
+                            if (6 == (dayOfWeek + 6) % 7) {
+                                return 'var(--accent)'
+                            }
+                            else {
+                                return 'var(--text-h)'
+                            }
+                        })(),
                         fontSize: '36px',
                         marginTop: '60px',
                         marginBottom: '-12px',
                         textAlign: 'center'
                     }}>
-                        <u>Sunday - {getDay(6)}</u>
-                    </div>
+                        {(() => {
+                            if (6 == (dayOfWeek + 6) % 7) {
+                                return <u>Today - Sunday, {getDay(6)}</u>
+                            }
+                            else {
+                                return <u>Sunday - {getDay(6)}</u>
+                            }
+                        })()}                    </div>
                     <DrawTodayPgWidget tasks={[
                         {name: 'Testing long string task to ensure ellipses are formed', type: 'Homework'},
                         {name: 'Task 2', type: 'Chores'},

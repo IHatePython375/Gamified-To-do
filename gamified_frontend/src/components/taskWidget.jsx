@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
 import { XPPerTask, TaskType } from './xpPerTask'
-import { getCategoryColorBg, getCategoryColorBorder } from './categoryHelper'
+import { useCategoryColors } from './categoryHelper.jsx'
 import DrawAddTaskButton from './addTaskButton.jsx'
 import GetDate from '../track_tasks.jsx'
 import './modifyTaskButton.css'
@@ -9,18 +9,44 @@ import './modifyTaskButton.css'
 const categories = ['Homework', 'Chores', 'Work']
 
 /*Remove pre-loaded tasks after designing rest of interface, used just for */
-export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
+export default function DrawTodayPgWidget({tasks: preLoadedTasks=[], onTasksChange}) {
     const [tasks, setTasks] = React.useState(preLoadedTasks)
     const [editingIndex, setEditingIndex] = React.useState(null)
     const [taskName, setTaskName] = React.useState('')
     const [error, setError] = React.useState('')
     const [selectedCategory, setSelectedCategory] = React.useState('General')
     const [categoryOpen, setCategoryOpen] = React.useState(false)
+    const modifyTaskRef = React.useRef(null)
+    const {getCategoryColorBg, getCategoryColorBorder} = useCategoryColors()
+
+    React.useEffect(() => {
+        function handleClickOutside(e) {
+            if (modifyTaskRef.current && !modifyTaskRef.current.contains(e.target)) {
+                setEditingIndex(null)
+                setCategoryOpen(false)
+            }
+        }
+        if (editingIndex != null) {
+        const timer = setTimeout(() => {
+            window.addEventListener('click', handleClickOutside)
+        }, 0)
+        return () => {
+            clearTimeout(timer)
+            window.removeEventListener('click', handleClickOutside)
+        }
+    }
+    return () => window.removeEventListener('click', handleClickOutside)
+    }, [editingIndex])
+
+    React.useEffect(() => {
+        if (onTasksChange) {
+            onTasksChange(tasks)
+        }
+    }, [tasks])
 
     function addTaskToList(newTask) {
         setTasks([...tasks, {...newTask, checked: false}])
     }
-
 
     function toggleTask(index) {
         setTasks(tasks.map((task, i) => {
@@ -31,18 +57,6 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                 return task
             }
         }))
-    }
-
-    function changeCategory(index, newCategory) {
-        setTasks(tasks.map((task, i) => {
-            if (i == index) {
-                return {...task, type: newCategory}
-            }
-            else {
-                return task
-            }
-        }))
-        setEditingIndex(null)
     }
 
     function handleSave(index) {
@@ -80,7 +94,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                 marginTop: '32px',
                 marginBottom: '24px',
                 minHeight: 'auto',
-                background: '#222',
+                background: 'var(--widgetBackground)',
                 border: '2px solid #555',
                 borderRadius: '8px',
                 padding: '8px',
@@ -120,6 +134,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                 cursor: 'pointer', 
                                 margin: 0,
                                 flexShrink: 0,
+                                accentColor: 'var(--checkboxColor)'
                             }} />
                             <span style={{
                                 whiteSpace: 'nowrap',
@@ -142,7 +157,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                             gap: '8px',
                         }}>
                             <div style={{
-                                background: '#333',
+                                background: 'var(--button-bg)',
                                 border: '1px solid var(--accent)',
                                 borderRadius: '8px',
                                 padding: '4px 12px',
@@ -151,7 +166,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                             }}>
                                 <XPPerTask taskCategory={task.type} />
                             </div>
-                            <div style={{ position: 'relative' }}>
+                            <div style={{ position: 'relative' }} ref={modifyTaskRef}>
                                 <button
                                     onClick={() => {
                                         if (editingIndex === index) {
@@ -170,7 +185,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                         minWidth: '120px',
                                         fontSize: '20px',
                                         cursor: 'pointer',
-                                        color: 'white',
+                                        color: 'var(--text-h)',
                                         marginRight: '16px'
                                     }}>
                                     <TaskType taskCategory={task.type} />
@@ -180,7 +195,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                         <div style={{
                                             fontSize: '26px',
                                             color: 'var(--text-h)',
-                                            padding: '4px 8px'
+                                            padding: '4px 8px',
                                         }}>
                                             <u>Task:</u>
                                             <input 
@@ -193,7 +208,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                                     color: 'var(--text-h)',
                                                     padding: '2px 8px',
                                                     marginLeft: '8px',
-                                                    background: '#333',
+                                                    background: 'var(--xpWidgetBg)',
                                                     border: '1px solid #555',
                                                     borderRadius: '4px',
                                                     width: '80%'
@@ -268,7 +283,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                                 width: '190px',
                                                 fontSize: '20px',
                                                 cursor: 'pointer',
-                                                color: 'white',
+                                                color: 'var(--text-h)',
                                                 boxSizing: 'border-box',
                                                 background: 'var(--accent)',
                                                 marginTop: '18px'
@@ -283,7 +298,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                                 width: '190px',
                                                 fontSize: '20px',
                                                 cursor: 'pointer',
-                                                color: 'white',
+                                                color: 'var(--text-h)',
                                                 boxSizing: 'border-box',
                                                 background: '#555',
                                                 marginTop: '18px',
@@ -299,7 +314,7 @@ export default function DrawTodayPgWidget({tasks: preLoadedTasks=[]}) {
                                             width: '95%',
                                             fontSize: '20px',
                                             cursor: 'pointer',
-                                            color: 'white',
+                                            color: 'var(--text-h)',
                                             boxSizing: 'border-box',
                                             background: '#ff0000',
                                             marginTop: '8px',

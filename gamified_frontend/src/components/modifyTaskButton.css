@@ -42,7 +42,7 @@
     bottom: 0;
     right: 100%;
     margin-right: 4px;
-    background: #222;
+    background: var(--widgetBackground);
     border: 1px solid #555;
     border-radius: 8px;
     padding: 6px;
