@@ -11,10 +11,10 @@ NECESSARY
 
 WISHLIST
 
-4. If a day in the month page has a task, there should be some indication of that state (ideally modifying it so that it shows #tasks completed/#tasks total)
+4. If a day in the month page has a task, there should be some indication of that state (ideally modifying it so that it shows #tasks completed/#tasks total) - DONE
 
 5. All save buttons should pop a message that says the changes were saved
 
 6. Pop-up message when you progress a level
 
-7. If a task is overdue, some warning message should be given (or the task should be added to the current day, in a different color, as to let the user know of the incomplete task)
+7. If a task is overdue, some warning message should be given (or the task should be added to the current day, in a different color, as to let the user know of the incomplete task) - DONE
