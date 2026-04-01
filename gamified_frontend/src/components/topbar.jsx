@@ -73,6 +73,14 @@ function DropdownMenu() {
 }
 
 
+function getTierFilter(level) {
+    if (level <= 3) return 'sepia(1) saturate(3) hue-rotate(320deg)'
+    if (level <= 6) return 'grayscale(1) brightness(1.3)'
+    if (level <= 8) return 'sepia(1) saturate(4) hue-rotate(10deg)'
+    if (level <= 9) return 'sepia(1) saturate(2) hue-rotate(180deg) brightness(1.4)'
+    return 'sepia(1) saturate(5) hue-rotate(150deg) brightness(1.5)'
+}
+
 export default function DrawTopbar({page = 'Home'}) {
     const {username} = useAccount()
     const totalXP = useTotalXP()
@@ -134,9 +142,10 @@ export default function DrawTopbar({page = 'Home'}) {
                         {currentRank}
                     </span>
                     <div className="badgeHover">
-                        <img src={Profile2} alt="Profile2" style={{ 
-                            width: '60px', 
-                            height: '60px' 
+                        <img src={Profile2} alt="Profile2" style={{
+                            width: '60px',
+                            height: '60px',
+                            filter: getTierFilter(level)
                         }}/>
                         <div className="badgeHoverMenu" style={{backgroundColor: 'var(--bg)'}}>
                             <span style={{
@@ -151,7 +160,7 @@ export default function DrawTopbar({page = 'Home'}) {
                                 paddingTop: '8px',
                                 textAlign: 'center',
                             }}>
-                                <img src={Profile2} alt="Profile2" style={{ width: '180px', height: '180px' }}/>
+                                <img src={Profile2} alt="Profile2" style={{ width: '180px', height: '180px', filter: getTierFilter(level + 1) }}/>
                             </span>
                             <span style={{
                                 paddingTop: 0,
