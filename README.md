@@ -3,7 +3,7 @@
 NECESSARY
 1. Linking the frontend to the backend - DONE
 
-2. When adding a category in settings doesn't add it to the dropdown in 'Add Task' (locked to just the provided 3)
+2. When adding a category in settings doesn't add it to the dropdown in 'Add Task' (locked to just the provided 3) - Need to connect to backend
 
 3. Deleting a category doesn't permanently delete it as it should, just temporarily removes it from the shown list
 
