@@ -1,0 +1,11 @@
+#center {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-grow: 1;
+  padding: 0 24px;
+  gap: 0px;
+  width: 100%;
+  box-sizing: border-box;
+}

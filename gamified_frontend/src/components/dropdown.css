@@ -1,0 +1,85 @@
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdownTrigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.dropdownButton {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 38px;
+    border-radius: 5px;
+    color: var(--text-h);
+    background: var(--bg);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.dropdownButton:focus-visible {
+    outline: 2px solid var(--accent-border);
+}
+
+.dropdownButton:hover {
+    border-color: var(--accent-border);
+}
+
+.dropdownButton[data-open="true"] {
+    border-color: var(--accent-border);
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 4px;
+    background: var(--widgetBackground);
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    font-size: 24px;
+    gap: 8px;
+}
+
+.dropdownMenuItem {
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.dropdownMenuItem:hover {
+    background: var(--accent);
+    color: var(--text-h);
+}
+
+.dropdown.right .dropdownMenu {
+    top: 0;
+    left: 100%;
+}
+
+.dropdownArrow {
+    display: inline-block;
+    margin-left: 12px;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid var(--dropdownButtonArrow);
+    border-bottom: 2px solid var(--dropdownButtonArrow);
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+}
+
+.dropdownButton[data-open="true"] .dropdownArrow {
+    transform: rotate(-45deg);
+}
