@@ -1,6 +1,6 @@
 # Remaining Functionality Needed to Add/Bugs to Fix
 
-1. Linking the frontend to the backend
+1. Linking the frontend to the backend - DONE
 
 2. When adding a category in settings doesn't add it to the dropdown in 'Add Task' (locked to just the provided 3)
 
