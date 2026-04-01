@@ -53,7 +53,7 @@ class DatabaseWrapper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
         title TEXT NOT NULL,
-        category TEXT DEFAULT 'personal' CHECK(category IN ('homework', 'chores', 'work', 'personal')),
+        category TEXT DEFAULT 'personal',
         priority TEXT DEFAULT 'medium' CHECK(priority IN ('low', 'medium', 'high')),
         is_completed BOOLEAN DEFAULT 0,
         scheduled_date DATE NOT NULL,
