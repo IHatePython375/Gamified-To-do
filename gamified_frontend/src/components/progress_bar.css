@@ -19,5 +19,5 @@
     color: rgb(0, 0, 0);
     font-weight: 900;
     font-size: 14px;
-    justify-content: center;
+    white-space: nowrap;
 }

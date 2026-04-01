@@ -4,8 +4,21 @@ import React from 'react'
 import './progress_bar.css'
 
 const ProgressBar = ({ progress, style }) => {
+    let textPosition;
+    if (progress == 0) {
+        textPosition = {left: '4px'}
+    }
+    else if (progress == 100) {
+        textPosition = {right: '4px'}
+    }
+    else {
+        textPosition = {left: `calc(${progress}% - 20px)`}
+    }
+
     return (
-        <div className = "barContainer" style={style}>
+        <div
+            className = "barContainer" 
+            style={{ ...style, position: 'relative' }}>
             <div
                 className = "progressBar"
                 style = {{ 
@@ -13,7 +26,14 @@ const ProgressBar = ({ progress, style }) => {
                     borderRadius: 'inherit' 
                 }}
             >
-                <span className = "progressText">{progress}%</span>
+                <span className="progressText" style={{
+                    position: 'absolute',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    ...textPosition
+                }}>
+                    {progress}%
+                </span>
             </div>
         </div>
     )

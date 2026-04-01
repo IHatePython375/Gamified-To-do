@@ -6,6 +6,7 @@ import Profile from '../assets/Profile.png'
 import Profile2 from '../assets/Profile2.png'
 import ProgressBar from './progress_bar.jsx';
 import { useAccount } from './storeAccountInfo.jsx'
+import {calculateLevel, levelBadges, useTotalXP} from './levelProgression.jsx'
 
 function DropdownButton({page}) {
     const { open, setOpen } = useContext(DropdownContext);
@@ -74,6 +75,25 @@ function DropdownMenu() {
 
 export default function DrawTopbar({page = 'Home'}) {
     const {username} = useAccount()
+    const totalXP = useTotalXP()
+    const { level, xpIntoLevel, xpForLevel } = calculateLevel(totalXP)
+    const progress = Math.round((xpIntoLevel/xpForLevel) * 100)
+    let currentRank
+    if (levelBadges[level - 1]) {
+        currentRank = levelBadges[level - 1]
+    }
+    else {
+        currentRank = `Level ${level}`
+    }
+
+    let nextRank
+    if (levelBadges[level]) {
+        nextRank = levelBadges[level]
+    }
+    else {
+        nextRank = `Level ${level + 1}`
+    }
+
     return (
         <div style={{ width: '100%', position: 'relative', zIndex: 50 }}>
             <div style={{
@@ -111,7 +131,7 @@ export default function DrawTopbar({page = 'Home'}) {
                         fontSize: '24px',
                         color: 'var(--text-h)'
                     }}>
-                        Bronze II
+                        {currentRank}
                     </span>
                     <div className="badgeHover">
                         <img src={Profile2} alt="Profile2" style={{ 
@@ -139,7 +159,7 @@ export default function DrawTopbar({page = 'Home'}) {
                                 textAlign: 'center',
                                 color: 'var(--text-h)'
                             }}>
-                                Bronze III
+                                {nextRank}
                             </span>
                             <span style={{
                                 paddingTop: '6px',
@@ -147,16 +167,20 @@ export default function DrawTopbar({page = 'Home'}) {
                                 textAlign: 'center',
                                 color: 'var(--text-h)'
                             }}>
-                                Current progress to Bronze III:
+                                {`Current progress to ${nextRank}:`}
                             </span>
-                            <ProgressBar progress={50} />
+                            <ProgressBar 
+                                style={{
+                                    borderRadius: '4px'
+                                }}
+                                progress={progress} />
                             <span style={{
                                 paddingTop: 0,
                                 fontSize: '14px',
                                 textAlign: 'center',
                                 color: 'var(--text-h)'
                             }}>
-                                3500/7000 XP
+                                {xpIntoLevel}/{xpForLevel} XP
                             </span>
                         </div>
                     </div>

@@ -37,7 +37,7 @@ function CategoryList() {
     const categoryRefs = React.useRef([])
     const [editCategoryName, setCategoryName] = React.useState('')
     const [colorPaletteOpen, setColorPaletteOpen] = React.useState(false)
-    const [editXP, setXP] = React.useState(100)
+    const [editXP, setXP] = React.useState("100")
     const [categoryColors, setCategoryColors] = React.useState(
         Object.fromEntries(contextCategories.map(c => [c.name, c.color]))
     )
@@ -57,7 +57,7 @@ function CategoryList() {
             }
         })
         const updatedColors = {...categoryColors, [newCategory]: categoryColors[oldCategory]}
-        const updatedXP = {...categoryXP, [newCategory]: editXP}
+        const updatedXP = {...categoryXP, [newCategory]: parseInt(editXP)}
         if (newCategory != oldCategory) {
             delete updatedColors[oldCategory]
             delete updatedXP[oldCategory]
@@ -122,8 +122,11 @@ function CategoryList() {
                             setOpenIndex(index)
                             setCategoryName(category)
                             setColorPaletteOpen(false)
-                            const xpMap = {'Homework': 250, 'Chores': 100, 'Work': 300}
-                            setXP(xpMap[category] || 100)
+                            if (categoryXP[category] != null) {
+                                setXP(categoryXP[category].toString())
+                            } else {
+                                setXP("100")
+                            }
                         }
                     }}
                     style={{
@@ -212,6 +215,27 @@ function CategoryList() {
                                 placeholder="100"
                                 value={editXP}
                                 onChange={(e) => setXP(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key == "Enter") {
+                                        if (editXP == "") {
+                                            setXP("100")
+                                            return
+                                        }
+
+                                        let xpVal = parseInt(editXP)
+                                        if (xpVal != null) {
+                                            if (xpVal < 50) {
+                                                xpVal = 50
+                                            }
+                                            if (xpVal > 500) {
+                                                xpVal = 500
+                                            }
+                                            setXP(xpVal.toString())
+                                        }
+                                    }
+                                }}
+                                min={50}
+                                max={500}
                                 style={{
                                     fontSize: '20px',
                                     color: 'var(--text-h)',
@@ -291,6 +315,7 @@ function CategoryList() {
                 const newCategory = 'New Category'
                 setCategoryList([...categoryList, newCategory])
                 setCategoryColors({...categoryColors, [newCategory]: '#888888'})
+                setCategoryXP(prev => ({ ...prev, [newCategory]: 100 }))
             }}
             style={{ 
                 marginTop: '8px', 
