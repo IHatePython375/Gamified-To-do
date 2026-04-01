@@ -1,6 +1,7 @@
 # Remaining Functionality Needed to Add/Bugs to Fix
 
 NECESSARY
+
 1. Linking the frontend to the backend - DONE
 
 2. When adding a category in settings doesn't add it to the dropdown in 'Add Task' (locked to just the provided 3) - Need to connect to backend
@@ -9,6 +10,7 @@ NECESSARY
 
 
 WISHLIST
+
 4. If a day in the month page has a task, there should be some indication of that state (ideally modifying it so that it shows #tasks completed/#tasks total)
 
 5. All save buttons should pop a message that says the changes were saved
