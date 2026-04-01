@@ -1,27 +1,42 @@
-import React, {useState, useContext, createContext} from 'react'
+import React, { useState, useContext, createContext, useEffect } from 'react'
+import { login, register, logout } from '../api'
 
 const AccountContext = createContext()
 
-export function AccountInfo({children}) {
-    const [username, setUsername] = useState(() =>
-        localStorage.getItem('username') || 'TestName'
-    )
+export function AccountInfo({ children }) {
+    const [username, setUsername] = useState('')
+    const [user, setUser] = useState(null)
 
-    function saveUsername(username) {
-        setUsername(username)
-        localStorage.setItem('username', username)
+    useEffect(() => {
+        const savedUsername = localStorage.getItem('username')
+        if (savedUsername) setUsername(savedUsername)
+    }, [])
+
+    async function handleLogin(username, password) {
+        const userData = await login(username, password)
+        setUser(userData)
+        setUsername(userData.username)
+        localStorage.setItem('username', userData.username)
+        return userData
     }
 
-    function savePassword(password) {
-        localStorage.setItem('password', password)
+    async function handleRegister(username, password) {
+        const userData = await register(username, password)
+        setUser(userData)
+        setUsername(userData.username)
+        localStorage.setItem('username', userData.username)
+        return userData
     }
 
-    function getPassword() {
-        return localStorage.getItem('password') || ''
+    function handleLogout() {
+        logout()
+        setUser(null)
+        setUsername('')
+        localStorage.removeItem('username')
     }
 
     return (
-        <AccountContext.Provider value={{username, saveUsername, savePassword, getPassword}}>
+        <AccountContext.Provider value={{ username, user, handleLogin, handleRegister, handleLogout }}>
             {children}
         </AccountContext.Provider>
     )

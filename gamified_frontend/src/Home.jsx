@@ -10,13 +10,13 @@ import { useTasks } from './TaskContext.jsx'
 
 export default function Home() {
     const { tasks } = useTasks()
-    const todayStr = new Date().toLocaleDateString('en-US')
-    const todayTasks = tasks.filter(t => t.date === todayStr)
+    const todayStr = new Date().toISOString().split('T')[0]
+    const todayTasks = tasks.filter(t => t.scheduled_date === todayStr)
 
-    const todayProgress = todayTasks.length === 0 ? 0 : Math.round((todayTasks.filter(t => t.checked).length / todayTasks.length) * 100)
+    const todayProgress = todayTasks.length === 0 ? 0 : Math.round((todayTasks.filter(t => t.is_completed).length / todayTasks.length) * 100)
     const weekStart = (() => { const d = new Date(); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return d })()
-    const weekTasks = tasks.filter(t => { const td = new Date(t.date); const we = new Date(weekStart); we.setDate(weekStart.getDate() + 6); return td >= weekStart && td <= we })
-    const weekProgress = weekTasks.length === 0 ? 0 : Math.round((weekTasks.filter(t => t.checked).length / weekTasks.length) * 100)
+    const weekTasks = tasks.filter(t => { const td = new Date(t.scheduled_date); const we = new Date(weekStart); we.setDate(weekStart.getDate() + 6); return td >= weekStart && td <= we })
+    const weekProgress = weekTasks.length === 0 ? 0 : Math.round((weekTasks.filter(t => t.is_completed).length / weekTasks.length) * 100)
 
 
     return (

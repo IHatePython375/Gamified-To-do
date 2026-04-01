@@ -10,6 +10,14 @@ import {applyTheme, lightTheme, darkTheme} from './themeSettings.js'
 import { CategoryProvider } from './components/categoryHelper.jsx'
 import { AccountInfo } from './components/storeAccountInfo.jsx'
 import { TaskProvider } from './TaskContext.jsx'
+import Login from './Login.jsx'
+import { useAccount } from './components/storeAccountInfo.jsx'
+
+function ProtectedRoute({ element }) {
+    const token = localStorage.getItem('token')
+    return token ? element : <Navigate to="/login" replace />
+}
+
 
 function App() {
   useEffect(() => {
@@ -26,11 +34,12 @@ function App() {
       <CategoryProvider>
         <AccountInfo>
           <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path="/today" element={<Today />} />
-              <Route path="/week" element={<Week />} />
-              <Route path="/month" element={<Month />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/' element={<ProtectedRoute element={<Home />} />} />
+              <Route path="/today" element={<ProtectedRoute element={<Today />} />} />
+              <Route path="/week" element={<ProtectedRoute element={<Week />} />} />
+              <Route path="/month" element={<ProtectedRoute element={<Month />} />} />
+              <Route path="/settings" element={<ProtectedRoute element={<Settings />} />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </AccountInfo>

@@ -45,7 +45,7 @@ export default function DrawTodayWidget({tasks=[]}) {
                     paddingBottom: '4px'
                 }}>
                     <input type="checkbox" 
-                    chhecked={task.checked || false}
+                    checked={task.is_completed || false}
                     onChange={() => toggleTask(task.id)}
                     style={{ 
                         width: '32px',
@@ -63,7 +63,7 @@ export default function DrawTodayWidget({tasks=[]}) {
                         color: 'var(--text-h)',
                         lineHeight: '1.4'
                     }}>
-                        {task.name}
+                        {task.title}
                     </span>
                 </label>
                 <div style={{
@@ -81,11 +81,11 @@ export default function DrawTodayWidget({tasks=[]}) {
                         display: 'flex',
                         alignItems: 'center',
                     }}>
-                        <XPPerTask taskCategory={task.type} />
+                        <XPPerTask taskCategory={task.category} />
                     </div>
                     <div style={{
-                        background: `${getCategoryColorBg(task.type)}`,
-                        border: `2px solid ${getCategoryColorBorder(task.type)}`,
+                        background: `${getCategoryColorBg(task.category)}`,
+                        border: `2px solid ${getCategoryColorBorder(task.category)}`,
                         borderRadius: '8px',
                         padding: '4px 0',
                         display: 'flex',
@@ -96,7 +96,7 @@ export default function DrawTodayWidget({tasks=[]}) {
                         color: 'var(--text-h)',
                         marginRight: '16px',
                     }}>
-                        <TaskType taskCategory={task.type} />
+                        <TaskType taskCategory={task.category} />
                     </div>
                 </div>
             </div>

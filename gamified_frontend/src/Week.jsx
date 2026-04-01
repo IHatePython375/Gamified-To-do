@@ -24,17 +24,17 @@ export default function Week() {
     function getDayISO(offset) {
         const d = new Date(startOfWeek)
         d.setDate(startOfWeek.getDate() + offset)
-        return d.toLocaleDateString('en-US') 
+        return d.toISOString().split('T')[0] 
     }
 
     const { tasks } = useTasks()
     const weekTasks = tasks.filter(t => {
-        const taskDate = new Date(t.date)
+        const taskDate = new Date(t.scheduled_date)
         const weekEnd = new Date(startOfWeek)
         weekEnd.setDate(startOfWeek.getDate() + 6)
         return taskDate >= startOfWeek && taskDate <= weekEnd
     })
-    const weekCompleted = weekTasks.filter(t => t.checked).length
+    const weekCompleted = weekTasks.filter(t => t.is_completed).length
     const weekProgress = weekTasks.length === 0 ? 0 : Math.round((weekCompleted / weekTasks.length) * 100)
 
 

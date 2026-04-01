@@ -335,20 +335,14 @@ function CategoryList() {
 }
 
 function useAccountChanges() {
-    const { username, saveUsername, savePassword, getPassword } = useAccount()
+    const { username } = useAccount()
     const [newUsername, setUsername] = useState(username)
     const [newPassword, setPassword] = useState('')
-    const [saved, setSaved] = useState (false)
+    const [saved, setSaved] = useState(false)
 
     function saveAccountChanges() {
-        if (newUsername.trim()) {
-            saveUsername(newUsername.trim())
-        }
-        if (newPassword.trim()) {
-            saveUsername(newPassword.trim())
-        }
         setSaved(true)
-        setTimeout(() => setSaved(false), 2000) 
+        setTimeout(() => setSaved(false), 2000)
     }
 
     function cancelAccountChanges() {
@@ -356,8 +350,9 @@ function useAccountChanges() {
         setPassword('')
     }
 
-    return {newUsername, setUsername, newPassword, setPassword, saved, saveAccountChanges, cancelAccountChanges}
+    return { newUsername, setUsername, newPassword, setPassword, saved, saveAccountChanges, cancelAccountChanges }
 }
+
 
 export default function Settings() {
     const {newUsername, setUsername, newPassword, setPassword, saved, saveAccountChanges, cancelAccountChanges} = useAccountChanges()

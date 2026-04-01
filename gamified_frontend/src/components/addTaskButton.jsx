@@ -2,12 +2,14 @@
 import React, {useContext} from 'react'
 import './addTaskButton.css'
 import { TaskType } from './xpPerTask'
-import { useCategoryColors } from './categoryHelper.jsx'
+//import { useCategoryColors } from './categoryHelper.jsx'
 import Dropdown, {DropdownContext} from './dropdown.jsx'
+import { useCategoryColors, useCategories } from './categoryHelper.jsx'
+
 
 const AddTaskContext = React.createContext();
 
-const categories = ['Homework', 'Chores', 'Work']
+// const categories = ['homework', 'chores', 'work', 'personal']
 
 function AddTask({ children, direction = "down", onAddTask }) {
     const [open, setOpen] = React.useState(false);
@@ -58,6 +60,9 @@ function AddTaskMenu({ open, setOpen, onAddTask }) {
     const [error, setError] = React.useState('')
     const {getCategoryColorBg, getCategoryColorBorder} = useCategoryColors()
 
+    const { categories: categoriesData } = useCategories()
+    const categories = categoriesData.map(c => c.name)
+
     if (!open) {
         return null;
     }
@@ -67,7 +72,7 @@ function AddTaskMenu({ open, setOpen, onAddTask }) {
             setError('Please enter a task name.');
             return;
         }
-        onAddTask({ name: taskName.trim(), type: selectedCategory });
+        onAddTask({ title: taskName.trim(), category: selectedCategory });
         setTaskName('');
         setSelectedCategory('General');
         setError('');

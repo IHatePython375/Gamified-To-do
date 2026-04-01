@@ -1,16 +1,16 @@
 import React from 'react'
 import { XPPerTask, TaskType } from './xpPerTask'
-import { useCategoryColors } from './categoryHelper.jsx'
 import DrawAddTaskButton from './addTaskButton.jsx'
 import { useTasks } from '../TaskContext.jsx'
 import './modifyTaskButton.css'
+import { useCategoryColors, useCategories } from './categoryHelper.jsx'
 
-const categories = ['Homework', 'Chores', 'Work']
+
 
 /*Remove pre-loaded tasks after designing rest of interface, used just for */
 export default function DrawTodayPgWidget({ date }) {
     const { tasks, addTask, toggleTask, updateTask, deleteTask } = useTasks()
-    const filteredTasks = tasks.filter(t => t.date === date)
+    const filteredTasks = tasks.filter(t => t.scheduled_date === date)
 
     const [editingId, setEditingId] = React.useState(null)
     const [taskName, setTaskName] = React.useState('')
@@ -19,6 +19,9 @@ export default function DrawTodayPgWidget({ date }) {
     const [categoryOpen, setCategoryOpen] = React.useState(false)
     const modifyTaskRef = React.useRef(null)
     const {getCategoryColorBg, getCategoryColorBorder} = useCategoryColors()
+
+    const { categories: categoriesData } = useCategories()
+    const categories = categoriesData.map(c => c.name)
 
     React.useEffect(() => {
         function handleClickOutside(e) {
@@ -46,12 +49,13 @@ export default function DrawTodayPgWidget({ date }) {
     // }, [tasks])
 
     function addTaskToList(newTask) {
-        addTask({ ...newTask, date: date })
+        addTask({ ...newTask, scheduled_date: date })
     }
 
     function handleSave(id) {
-        const updatedName = taskName.trim() || filteredTasks.find(t => t.id === id).name
-        updateTask(id, { name: updatedName, type: selectedCategory })
+        const updatedName = taskName.trim() || filteredTasks.find(t => t.id === id).title
+        updateTask(id, { title: updatedName, category: selectedCategory })
+
         setTaskName('')
         setSelectedCategory('General')
         setError('')
@@ -103,7 +107,7 @@ export default function DrawTodayPgWidget({ date }) {
                             paddingBottom: '4px'
                         }}>
                             <input type="checkbox" 
-                                checked={task.checked || false}
+                                checked={task.is_completed || false}
                                 onChange={() => toggleTask(task.id)}
                                 style={{ 
                                     width: '32px',
@@ -120,9 +124,9 @@ export default function DrawTodayPgWidget({ date }) {
                                 flex: 1,
                                 color: 'var(--text-h)',
                                 lineHeight: '1.4',
-                                textDecoration: task.checked ? 'line-through' : 'none',
+                                textDecoration: task.is_completed ? 'line-through' : 'none',
                             }}>
-                                {task.name}
+                                {task.title}
                             </span>
                         </label>
                         <div style={{
@@ -140,7 +144,7 @@ export default function DrawTodayPgWidget({ date }) {
                                 display: 'flex',
                                 alignItems: 'center',
                             }}>
-                                <XPPerTask taskCategory={task.type} />
+                                <XPPerTask taskCategory={task.category} />
                             </div>
                             <div style={{ position: 'relative' }} ref={modifyTaskRef}>
                                 <button
@@ -149,13 +153,13 @@ export default function DrawTodayPgWidget({ date }) {
                                             setEditingId(null)
                                         } else {
                                             setEditingId(task.id)
-                                            setTaskName(task.name)
-                                            setSelectedCategory(task.type)
+                                            setTaskName(task.title)
+                                            setSelectedCategory(task.category)
                                         }
                                     }}
                                     style={{
-                                        background: getCategoryColorBg(task.type),
-                                        border: `2px solid ${getCategoryColorBorder(task.type)}`,
+                                        background: getCategoryColorBg(task.category),
+                                        border: `2px solid ${getCategoryColorBorder(task.category)}`,
                                         borderRadius: '8px',
                                         padding: '4px 12px',
                                         minWidth: '120px',
@@ -164,7 +168,7 @@ export default function DrawTodayPgWidget({ date }) {
                                         color: 'var(--text-h)',
                                         marginRight: '16px'
                                     }}>
-                                    <TaskType taskCategory={task.type} />
+                                    <TaskType taskCategory={task.category} />
                                 </button>
                                 {editingId === task.id && (
                                     <div className="modifyTaskMenu">

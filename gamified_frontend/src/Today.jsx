@@ -11,11 +11,11 @@ import { useTasks } from './TaskContext.jsx'
 
 export default function Today() {
     const todayKey = getTodayKey()
-    const todayStr = new Date().toLocaleDateString('en-US'); 
+    const todayStr = new Date().toISOString().split('T')[0]; 
 
     const { tasks } = useTasks()
-    const todayCompleted = tasks.filter(t => t.date === todayStr && t.checked).length
-    const todayProgress = tasks.filter(t => t.date === todayStr).length === 0 ? 0 : Math.round((todayCompleted / tasks.filter(t => t.date === todayStr).length) * 100)
+    const todayCompleted = tasks.filter(t => t.scheduled_date === todayStr && t.is_completed).length
+    const todayProgress = tasks.filter(t => t.scheduled_date === todayStr).length === 0 ? 0 : Math.round((todayCompleted / tasks.filter(t => t.scheduled_date === todayStr).length) * 100)
 
     return (
         <div className="app">
@@ -44,7 +44,7 @@ export default function Today() {
                     display: 'block',
                     textAlign: 'center',
                 }}>
-                    {todayCompleted}/{tasks.filter(t => t.date === todayStr).length} tasks complete for the day
+                    {todayCompleted}/{tasks.filter(t => t.scheduled_date === todayStr).length} tasks complete for the day
                 </span>
                 <div>
                     <div style={{

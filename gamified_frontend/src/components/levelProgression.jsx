@@ -47,8 +47,8 @@ export function useTotalXP() {
     const {tasks} = useTasks()
     const {categories} = useCategories()
 
-    const totalXP = tasks.filter(t => t.checked).reduce((sum, t) => {
-        const category = categories.find(c => c.name == t.type)
+    const totalXP = tasks.filter(t => t.is_completed).reduce((sum, t) => {
+        const category = categories.find(c => c.name == t.category)
         if (category) {
             return sum + category.xp
         }

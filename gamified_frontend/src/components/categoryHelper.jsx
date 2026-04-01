@@ -2,16 +2,18 @@ import React, {useState, useContext, createContext} from 'react'
 
 function GetXP() {
     return {
-        'Homework': {xp: 250},
-        'Chores': {xp: 100},
-        'Work': {xp: 300}
+        'homework': {xp: 250},
+        'chores': {xp: 100},
+        'work': {xp: 300},
+        'personal': {xp: 150}
     }
 }
 
 const preloadedCategories = [
-    {name: 'Homework', color: '#a50000b3', xp: 250},
-    {name: 'Chores', color: '#620096b3', xp: 100},
-    {name: 'Work', color: '#073604b3', xp: 300}
+    {name: 'homework', color: '#a50000b3', xp: 250},
+    {name: 'chores', color: '#620096b3', xp: 100},
+    {name: 'work', color: '#073604b3', xp: 300},
+    {name: 'personal', color: '#1a73e8b3', xp: 150}
 ]
 
 const CategoryContext = createContext()

@@ -28,7 +28,7 @@ export default function Month() {
 
     let dateStr
     if (selectedDate) {
-        dateStr = selectedDate.toLocaleDateString('en-US')
+        dateStr = selectedDate.toISOString().split('T')[0]
     }
     else {
         dateStr = null
